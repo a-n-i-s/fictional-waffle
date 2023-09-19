@@ -50,16 +50,17 @@ class CustomUserManager(BaseUserManager):
         if not password:
             raise ValueError(_('Superuser must have a password'))
         if email:
-            email=validate_email(email)
+            email=self.normalize_email(email)
             self.email_validator(email)
         else:
              raise ValueError(_('Superuser Account: An email is required'))
 
-        user=self.model(
+        user=self.create_user(
              email=email,
              username=username,
              first_name=first_name,
              last_name=last_name,
+             password=password,
              **extra_fields
         )
         user.save(using=self._db)
