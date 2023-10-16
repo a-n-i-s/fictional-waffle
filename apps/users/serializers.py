@@ -8,7 +8,7 @@ User=get_user_model()
 
 class UserSerializer(serializers.ModelSerializer):
     gender=serializers.CharField(source="profile.gender")
-    phonenumber=PhoneNumberField(source='profiile.phonenumber')
+    phonenumber=PhoneNumberField(source='profile.phonenumber')
     profile_photo=serializers.ImageField(source='profile.profile_photo')
     country=CountryField(source='profile.country')
     city=serializers.CharField(source='profile.city')
@@ -24,13 +24,16 @@ class UserSerializer(serializers.ModelSerializer):
     def get_first_name(self,obj):
         return obj.first_name.title()
     
+    def get_full_name(self,obj):
+        return f"{obj.first_name.title()} {obj.last_name.title()}"
+    
     def get_last_name(self,obj):
         return obj.last_name.title()
     
     def to_representation(self, instance):
 
         rep= super(UserSerializer,self).to_representation(instance)
-        if rep.is_superuser:
+        if rep.is_super_user:
             rep["admin"]=True
         
         return rep
