@@ -1,10 +1,10 @@
-from django.shortcuts import render
 from django.contrib.auth import get_user_model
 from rest_framework import permissions, status
-from rest_framework.decorators import permission_classes, api_view
+from rest_framework.decorators import api_view, permission_classes
 from rest_framework.views import Response
 
 from apps.profiles.models import Profile
+
 from .models import Rating
 
 User = get_user_model()
@@ -33,7 +33,7 @@ def create_agent_review(request, profile_id):
         )
 
     else:
-        review = Rating.objects.create(
+        Rating.objects.create(
             rater=request.user,
             agent=agent_profile,
             rating=data["rating"],

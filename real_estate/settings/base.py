@@ -11,7 +11,16 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 from pathlib import Path
+
 import environ
+
+from datetime import timedelta
+
+import logging
+
+import logging.config
+
+from django.utils.log import DEFAULT_LOGGING
 
 env = environ.Env(DEBUG=(bool, False))
 
@@ -156,8 +165,6 @@ REST_FRAMEWORK = {
 }
 
 
-from datetime import timedelta
-
 SIMPLE_JWT = {
     "AUTH_HEADER_TYPES": (
         "BEARER",
@@ -194,10 +201,6 @@ DJOSER = {
 
 COUNTRIES_OVERRIDE = {"IL": None}
 # logging
-import logging
-import logging.config
-
-from django.utils.log import DEFAULT_LOGGING
 
 logger = logging.getLogger(__name__)
 

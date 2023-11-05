@@ -6,15 +6,15 @@ from rest_framework import filters, generics, permissions, status
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from rest_framework.views import APIView
+
 from .exceptions import PropertyNotFound
 from .models import Property, PropertyViews
+from .pagination import PropertyPagination
 from .serializers import (
+    PropertyCreateSerializer,
     PropertySerializer,
     PropertyViewSerializer,
-    PropertyCreateSerializer,
 )
-from .pagination import PropertyPagination
-
 
 logger = logging.getLogger(__name__)
 
@@ -101,7 +101,7 @@ def update_property_api_view(request, slug):
         raise PropertyNotFound
 
     user = request.user
-    if request.user != property.user:
+    if user != property.user:
         return Response(
             {"error": "You cannot edit a property which does not belong to you."},
             status=status.HTTP_403_FORBIDDEN,
@@ -141,7 +141,7 @@ def delete_property_api_view(request, slug):
         raise PropertyNotFound
 
     user = request.user
-    if request.user != property.user:
+    if user != property.user:
         return Response(
             {"error": "You cannot delete a property which does not belong to you."},
             status=status.HTTP_403_FORBIDDEN,
