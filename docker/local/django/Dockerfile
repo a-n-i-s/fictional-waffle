@@ -36,5 +36,12 @@ RUN chmod +x /entrypoint
 COPY ./docker/local/django/start /start
 RUN chmod +x /start
 
+
+COPY ./docker/local/django/celery/worker/start /start-celeryworker
+RUN chmod +x /start-celeryworker
+
+COPY ./docker/local/django/flower/start /start-flower
+RUN chmod +x /start-flower
+
 ENTRYPOINT ["/entrypoint"]
 
