@@ -1,0 +1,15 @@
+ARG NODE_VERSION=18.16.0-alpine
+
+FROM node:${NODE_VERSION} as node
+
+ARG NODE_HOME=/app
+
+WORKDIR ${NODE_HOME}
+
+COPY ./package*.json .
+
+RUN npm install
+
+COPY . ${APP_HOME}
+
+CMD ["npm","start"]

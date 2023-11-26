@@ -83,6 +83,18 @@ services:
       - "5557:5555"
     networks:
       - estate-react
+
+  client:
+    build:
+      context: ./client
+      dockerfile: ./docker/local/dockerfile
+    restart: on-failure
+    volumes:
+      - ./client:/app
+      - /app/node_modules
+    networks:
+      - estate-react
+
 networks:
   estate-react:
     driver: bridge
